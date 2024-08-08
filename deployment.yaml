@@ -4,7 +4,7 @@ metadata:
   name: thewilliamkeel
 spec:
   replicas: 2
-  selector: 
+  selector:
     matchLabels:
       app: thewilliamkeel
   template:
@@ -16,6 +16,18 @@ spec:
       - name: thewilliamkeel
         image: thewilliamkeel:latest
         ports:
-      - containerPort: 5000
+        - containerPort: 5000
+        livenessProbe: 
+          httpGet:
+            path: /
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 5
     imagePullSecrets:
     - name: regcred
